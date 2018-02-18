@@ -18,7 +18,7 @@ add .babelrc
 
 ## Example
 
-####decorator class example:
+decorator class:
 ```js
 import { DECORATOR } from '../src';
 
@@ -53,7 +53,7 @@ class ExampleDecorator {
 export default DECORATOR(ExampleDecorator);
 ```
 
-####decorator usage:
+decorator usage:
 ```js
 import ExampleDecorator from './exampleDecorator';
 
