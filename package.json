@@ -1,0 +1,33 @@
+{
+  "name": "decorator-wrapper",
+  "version": "1.0.0",
+  "description": "Wrapper for implementing decorators in JavaScript ES6",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "nodemon -w test --exec \"babel-node test\"",
+    "build": "babel src -s -D -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kalevski/decorator-wrapper.git"
+  },
+  "keywords": [
+    "decorator",
+    "ES6",
+    "javascript"
+  ],
+  "author": "Daniel Kalevski",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kalevski/decorator-wrapper/issues"
+  },
+  "homepage": "https://github.com/kalevski/decorator-wrapper#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "nodemon": "^1.15.0"
+  }
+}
