@@ -238,7 +238,7 @@ describe('Test Method Decorator', function(){
     
   });
   
-  it('method decorator argument are correct', function(){
+  it('method decorator arguments are correct', function(){
     let dmethod = undefined, 
         dmethodName = undefined, 
         dargNames = undefined, 
@@ -260,9 +260,110 @@ describe('Test Method Decorator', function(){
       foo(strVal, numVal){}
     }
     
-    new AClass().foo('forty', 2)
+    let inst = new AClass();
+    inst.foo('forty', 2);
     
     
+    assert.ok(dmethod, 'Method reference was not passed to the decorator.');
+    assert.equal(dmethodName, 'foo', 'Expected to get the correct method name "foo", but instead got ' + dmethodName);
+    assert.ok(dargNames, 'Method argument names were not passed to the decorator.');
+    
+    assert.equal(dargNames.length, 2, 'Expected to get 2 argument names, but instead got ' + dargNames.length);
+    assert.equal(dargNames[0], 'strVal', 'Expected to get "strVal" for the first argument name. Instead got ' + dargNames[0]);
+    assert.equal(dargNames[1], 'numVal', 'Expected to get "numVal" for the second argument name. Instead got ' + dargNames[1]);
+    
+    assert.ok(dscope, 'Method scope was not passed');
+    assert.equal(inst, dscope, 'Expected to get ' + inst + ' as method scope, but instead got ' + dscope);
+  });
+  
+  it('should be able to pass a value to the method decorator', function(){
+    let dval = undefined;
+    
+    class ClassDecorator extends DummyDecorator {
+      methodCalled(method, methodName, args, argNames, scope, [ value ]) {
+        dval = value;
+      }
+    }
+    
+    let decorator = DECORATOR(ClassDecorator);
+    
+    class AClass {
+      @decorator('flag')
+      foo(){ }
+    }
+    
+    new AClass().foo();
+    
+    assert.ok(dval, 'Decorator argument was not passed to the decorator handler.');
+    assert.equal(dval, 'flag', 'Expected to get "flag" for the decorator argument value, but instead got ' + dval);
   });
   
 });
+
+describe('Test Property Decorator', function(){
+  it('property decorator should be called', function(){
+    let called = undefined;
+    class ClassDecorator extends DummyDecorator {
+      propertyInit(propertyName, descriptor) {
+        called = true;
+      }
+    }
+    
+    let decorator = DECORATOR(ClassDecorator);
+    
+    class AClass {
+      @decorator
+      foo = 9000
+    }
+    
+    new AClass();
+    
+    assert.ok(called, 'Property decorator was not called.');
+  });
+  
+  it('property name should be passed to the decorator handler', function(){
+    let pname = undefined;
+    class ClassDecorator extends DummyDecorator {
+      propertyInit(propertyName, descriptor) {
+        pname = propertyName;
+      }
+    }
+    
+    let decorator = DECORATOR(ClassDecorator);
+    
+    class AClass {
+      @decorator
+      foo = 9000
+    }
+    
+    new AClass();
+    
+    assert.ok(pname, 'Property name was not passed to the decorator handler');
+    assert.equal(pname, 'foo', 'Expected to get "foo" as the property name, but instead got ' + pname);
+  });
+  
+  it('should be able to pass an argument to the property decorator', function(){
+    let pval = undefined;
+    class ClassDecorator extends DummyDecorator {
+      propertyInit(propertyName, descriptor, [ value ]) {
+        pval = value;
+      }
+    }
+    
+    let decorator = DECORATOR(ClassDecorator);
+    
+    class AClass {
+      @decorator('over')
+      foo = 9000
+    }
+    
+    new AClass();
+    
+    assert.ok(pval, 'Decorator argument was not passed to the handler.');
+    assert.equal(pval, 'over', 'Expected to get "over" as decorator argument, but instead got ' + pval);
+  });
+  
+});
+
+
+
