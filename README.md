@@ -1,5 +1,7 @@
 ### DECORATOR-WRAPPER
 
+[![Build Status](https://travis-ci.org/kalevski/decorator-wrapper.svg?branch=master)](https://travis-ci.org/kalevski/decorator-wrapper)
+
 This is all you need to write your own decorators in JavaScript
 
 ## Installation
